@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TalkGenie</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+</head>
+
+<body>
+    <div class="chatbox">
+        <header>TalkGenie</header>
+
+        <!-- show all messages -->
+        <div id="chats">
+            <% if (locals.messages) { %>
+                <% messages.forEach(thread=> { %>
+                    <p class="<%= thread.isFromUser ? 'my-text thread' : 'bot-text thread' %>">
+                        <span class="">
+                            <%= thread.message %>
+                        </span>
+                    </p>
+                    <% }); %>
+                        <% } %>
+                            <div id="typing-indicator" class="hide">Genie is Typing...</div>
+        </div>
+
+        <!-- form field for sending messages -->
+        <form id="message-form">
+            <input type="text" id="message-input" placeholder="Message TalkGenie" required />
+            <button type="submit">
+                <span class="material-symbols-outlined">
+                    send
+                </span>
+            </button>
+        </form>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+        //constants
+        const chat = document.getElementById('chats');
+        const typingIndicator = document.getElementById('typing-indicator');
+        const form = document.getElementById('message-form');
+        const messageInput = document.getElementById('message-input');
+        const socket = io();
+
+        // on window load
+        document.addEventListener('DOMContentLoaded', () => {
+            scrollToBottom();
+        });
+
+        // Handle incoming messages
+        socket.on('message', (data) => {
+            hidetypingIndicator();
+
+            const newParagraph = document.createElement('p');
+            if (data.user === 'Genie') {
+                newParagraph.className = 'bot-text thread';
+            } else {
+                newParagraph.className = 'my-text thread';
+            }
+            const spanElement = document.createElement('span');
+            spanElement.textContent = data.content;
+
+            newParagraph.appendChild(spanElement);
+
+            chat.insertBefore(newParagraph, typingIndicator);
+
+            // chat.prepend();
+            scrollToBottom()
+        })
+
+        // handling message form submission
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // null check
+            if (messageInput?.value === '' || messageInput?.value.trim() === '') return;
+
+            try {
+                const user = 'You';
+                const content = messageInput.value.trim();
+
+                socket.emit('message', { user, content });
+
+                showtypingIndicator();
+
+                // clear input field
+                messageInput.value = '';
+            } catch (error) {
+                alert('Something Went Wrong. Please refresh the page and try again')
+                console.log(error);
+            }
+        });
+
+        //scroll to bottom
+        function scrollToBottom() {
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        //typing Indicator hide
+        function hidetypingIndicator() {
+            typingIndicator.classList.add('hide')
+        }
+
+        //typing Indicator show
+        function showtypingIndicator() {
+            typingIndicator.classList.remove('hide');
+        }
+
+
+    </script>
+</body>
+
+</html>

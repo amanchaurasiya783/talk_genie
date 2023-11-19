@@ -1,0 +1,4 @@
+=>  Adding User Authentication by creating a SignUp and Login Feature
+=>  Showing Date and Time of the chat
+=>  Categorising Chats on the basis of days
+=>  Theme Changing Feature , having multiple UI Themes

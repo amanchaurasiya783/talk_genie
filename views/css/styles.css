@@ -1,0 +1,130 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+body {
+    background-color: rgb(7, 8, 10);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-weight: bold;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: rgba(34, 37, 47, 0.7);
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.chatbox {
+    background-color: rgb(34, 37, 47);
+    width: 100%;
+    max-width: 600px;
+    min-width: 200px;
+    height: 100vh;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+#chats {
+    flex-grow: 1;
+    overflow-y: scroll;
+}
+
+header {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    font-size: 20px;
+    color: white;
+    border-radius: 50px;
+    border-bottom: 2px solid rgb(25, 71, 91);
+}
+
+#message-form {
+    bottom: 8px;
+    width: 100%;
+    display: flex;
+
+    & #message-input {
+        outline: none;
+        border: none;
+        background-color: transparent;
+        border-bottom: 2px solid rgb(25, 71, 91);
+        flex-grow: 1;
+        font-size: 16px;
+        color: white;
+        padding-left: 12px;
+
+        & ::placeholder {
+            color: white;
+        }
+    }
+
+    & button {
+        outline: none;
+        cursor: pointer;
+        border: none;
+        background-color: rgb(58, 64, 82);
+        color: white;
+        padding: 5px;
+        border-radius: 50%;
+
+        & :active {
+            opacity: 0.7;
+        }
+    }
+}
+
+.my-text {
+    color: rgb(26, 25, 25);
+    padding: 6px;
+    border-radius: 8px;
+    box-shadow: 0 0 3px;
+    margin: 15px;
+    width: fit-content;
+    max-width: 400px;
+    margin-left: auto;
+    background-color: rgb(255, 252, 230);
+}
+
+.bot-text {
+    color: rgb(26, 25, 25);
+    padding: 6px;
+    border-radius: 4px;
+    box-shadow: 0 0 3px;
+    margin: 15px;
+    width: fit-content;
+    margin-right: auto;
+    background-color: rgb(214, 255, 231);
+}
+
+#typing-indicator {
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 25px;
+    text-align: center;
+    width: fit-content;
+    margin: auto;
+    color: rgb(255, 255, 255);
+    background-color: rgb(105, 113, 136);
+    cursor: not-allowed;
+    margin-top: auto;
+}
+
+.hide {
+    display: none;
+}
